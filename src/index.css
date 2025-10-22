@@ -1,13 +1,18 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-body {
-  height: 100vh;
-  background: #f5f5f5;
-  color: #2c3e50;
-}
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Englebert&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rouge+Script&display=swap");
+@import "tailwindcss";
 
-.img {
-  width: 150px;
+@theme {
+  --font-nunito: "Nunito Sans";
+  --font-englebert: "Englebert";
+  --font-rouge: "Rouge Script";
+  --font-dm: "dm sans";
+  --color-dark: #2c2d26;
+  --color-brow: #b2a298;
+  --color-primary: #e9e9db;
+  --color-red: #d2564f;
+  --color-brownish: #dcdccf;
+  --color-lightBrownish: #e9e9db;
 }
