@@ -14,7 +14,12 @@ const App = () => {
         className="bg-primary relative"
         style={{ width: "99vw", height: "100vh" }}
       >
-        <DomeGallery fit={1} maxVerticalRotationDeg={12} grayscale={false} />
+        <DomeGallery
+          overlayBlurColor="#e9e9db"
+          fit={1}
+          maxVerticalRotationDeg={12}
+          grayscale={false}
+        />
         <div className="bg-black h-46 pb-28 flex items-center justify-center">
           <Button>All Gallery</Button>
         </div>
