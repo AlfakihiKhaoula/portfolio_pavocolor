@@ -1,73 +1,141 @@
-import React from "react";
+import React, { useRef, useLayoutEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import SectionWrapper from "./SectionWrapper";
+import ImageTrail from "./ImageTrail";
+import { Info } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
+  const containerRef = useRef(null);
+  const icon1 = useRef(null);
+  const icon2 = useRef(null);
+
+  useGSAP(() => {
+    const el = containerRef.current;
+    const q = gsap.utils.selector(el);
+
+    gsap.to(icon1.current, {
+      x: 25,
+      scrollTrigger: {
+        trigger: el,
+        start: "top 100%",
+        end: "top 40%",
+        scrub: true,
+      },
+    });
+
+    gsap.to(icon2.current, {
+      x: -25,
+      scrollTrigger: {
+        trigger: el,
+        start: "top 100%",
+        end: "top 40%",
+        scrub: true,
+      },
+    });
+
+    // Animate heading words
+    gsap.fromTo(
+      q(".word-h1"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          end: "top 40%",
+          scrub: true,
+        },
+      }
+    );
+
+    // Animate paragraph words
+    gsap.fromTo(
+      q(".word-p"),
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          end: "top 40%",
+          scrub: true,
+        },
+      }
+    );
+
+    gsap.to(q(".word-h1, .word-p"), {
+      color: "#1a1a1a",
+      duration: 1.2,
+      scrollTrigger: {
+        trigger: el,
+        start: "top 80%",
+        end: "top 40%",
+        scrub: true,
+      },
+    });
+  }, []);
+
+  // Helper to wrap each word in a span
+  const wrapWords = (text, className) =>
+    text.split(" ").map((word, i) => (
+      <span key={i} className={`${className} inline-block mr-2`}>
+        {word}
+      </span>
+    ));
+
   return (
-    <div className="min-h-screen bg-primary py-36 md:pb-40">
-      <SectionWrapper className={"space-y-24 px-5"}>
-        <div className="flex flex-col md:flex-row  relative gap-10">
-          <div className="relative z-30 drop-shadow-2xl md:w-1/2">
-            <img
-              src="/logo.png"
-              alt="Logo"
-              className="w-[512px] relative  z-20"
-              style={{
-                clipPath: "xywh(0 0 100% 100% round 0% 0% 70% 0%)",
-              }}
-            />
+    <div className="min-h-screen bg-primary relative">
+      <SectionWrapper className="space-y-24 px-5 relative">
+        {/* Animated text */}
+        <div
+          className="flex flex-col items-center justify-center absolute left-1/2 top-1/2 
+                     -translate-x-1/2 -translate-y-1/2 z-20 select-none space-y-16 text-gray-400 text-center"
+        >
+          <div className="flex items-center gap-12">
+            <Info ref={icon1} color="#b88d72" size={30} />
+            <h1 className="font-semibold uppercase font-dm text-2xl flex flex-wrap justify-center text-[#b88d72]">
+              About our company
+            </h1>
+            <Info ref={icon2} color="#b88d72" size={30} />
+          </div>
+          <p
+            ref={containerRef}
+            className="font-dm max-w-4xl text-3xl font-bold flex flex-wrap justify-center text-brown"
+          >
+            {wrapWords(
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis officia beatae nam quisquam accusamus eum corrupti, quas ad sequi?",
+              "word-p"
+            )}
+          </p>
+        </div>
 
-            <div className="md:block hidden absolute bottom-1/2 right-1/2 translate-y-full translate-x-4/5 z-10 w-[454px] h-[216px] rotate-[130deg] rounded-[50%/50%] bg-brow/40" />
-          </div>
-          <div className="md:w-1/2 font-rouge flex flex-col justify-center gap-5">
-            <h1 className="text-5xl">Multiple Modernisms in the Americas</h1>
-            <p className="text-base font-nunito font-semibold">
-              For many years these works, along with other beloved paintings and
-              sculptures, have been located in galleries 262-65 in the Rice
-              Building. We in Arts of the Americas recently re-envisioned and
-              reinstalled these galleries, seeking to present art of North
-              America in a more lively and engaging manner. <br /> <br />
-              Our intention was to contextualize old favorites in new ways,
-              introduce a greater variety of objects, and offer more complex and
-              interesting narratives that highlight the true breadth and depth
-              of our collection.
-            </p>
-          </div>
-        </div>{" "}
-        <div className="flex flex-col md:flex-row  relative gap-10">
-          <div className="md:w-1/2 font-rouge flex flex-col justify-center gap-5">
-            <img src="/img.jpg" alt="Logo" className="w-[350px]  md:hidden" />
-            <h1 className="text-5xl">Andrew James associate curator</h1>
-            <p className="text-base font-nunito font-semibold">
-              With this reinstallation, it was important to bring works by
-              Native American artists into these galleries to create a more
-              inclusive, expansive, and simply more accurate presentation of
-              American art. <br /> <br /> These additions do not replace our
-              dedicated gallery of Native and Indigenous art in the Morton Wing,
-              but rather are a complement to it.
-            </p>
-          </div>
-
-          <div className="w-1/2 hidden md:block gap-5 relative">
-            <img
-              src="/img.jpg"
-              alt="Logo"
-              className="w-[350px] rotate-[40deg] absolute -top-9 left-15 -translate-y-1/5  z-20 "
-              style={{
-                clipPath: "ellipse(25% 50% at 50% 50%)",
-              }}
-            />
-            <img
-              src="/img.jpg"
-              alt="Logo"
-              className="w-[150px] rotate-[40deg] absolute top-20 right-15 -translate-y-1/5  z-20 "
-              style={{
-                clipPath: "circle(50%)",
-              }}
-            />
-            <div className="md:flex hidden absolute  top-0 z-10 w-[454px] h-[200px] rotate-[130deg] rounded-[50%/50%] border-2 border-red-500 " />
-
-            <div className="md:flex hidden absolute right-0  z-10 w-[400px] h-[200px] rotate-[30deg] rounded-[50%/50%] border-2 border-red-500 " />
-          </div>
+        {/* Image Trail */}
+        <div className="h-[90vh] relative overflow-hidden z-10">
+          <ImageTrail
+            items={[
+              "https://picsum.photos/id/287/300/300",
+              "https://picsum.photos/id/1001/300/300",
+              "https://picsum.photos/id/1025/300/300",
+              "https://picsum.photos/id/1026/300/300",
+              "https://picsum.photos/id/1027/300/300",
+              "https://picsum.photos/id/1028/300/300",
+              "https://picsum.photos/id/1029/300/300",
+              "https://picsum.photos/id/1030/300/300",
+            ]}
+            variant={1}
+          />
         </div>
       </SectionWrapper>
     </div>

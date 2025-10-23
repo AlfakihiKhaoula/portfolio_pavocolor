@@ -1,11 +1,12 @@
 import React from "react";
 
-const NewGalleryImages = ({ clipPath }) => {
+const NewGalleryImages = ({ img, clipPath }) => {
   return (
     <img
-      src="/img.jpg"
+      src={img}
       alt="img"
-      className="select-none"
+      className="select-none w-72
+      "
       style={{
         clipPath: clipPath,
       }}
